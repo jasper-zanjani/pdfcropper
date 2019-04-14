@@ -1,12 +1,18 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
+import os,sys
 
-path = "C:/Users/jaspe/Documents/Books and Courses/"
-filename = "gawk"
-fn=f'{path}{filename}-cropped.pdf'
+if os.uname().sysname == 'Linux':
+  path = os.path.expanduser('~/Downloads/')
+else:
+  path = "C:/Users/jaspe/Documents/Books and Courses/"
+filename = sys.argv[1]
+if not filename.endswith('.pdf'):
+  filename+='.pdf'
+fo=f'{path}{filename}-cropped.pdf'
 
 # Margins in inches
 # --All pages
-top, right, bottom, left= 0.5, 1, 1, 1
+top, right, bottom, left= 1, 1, 1, 1
 
 # --Odd pages
 oddLeft   =left
@@ -33,7 +39,7 @@ evenBottom*=72
 pagesToExclude = []
 
 if __name__ == "__main__":
-  with open(f'{path}{filename}.pdf','rb') as r:
+  with open(f'{path}{filename}','rb') as r:
     global orig
     orig = PdfFileReader(r)
     pages = orig.getNumPages()
@@ -57,6 +63,6 @@ if __name__ == "__main__":
         out.addPage(p)
       else:
         continue
-    with open(fn, "wb") as outf:
+    with open(fo, "wb") as outf:
       out.write(outf)
-      print(f'PDF cropped to {fn}')
+      print(f'PDF cropped to {fo}')
