@@ -1,28 +1,23 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
 import os,sys
 
-if os.uname().sysname == 'Linux':
-  path = os.path.expanduser('~/Downloads/')
-else:
-  path = "C:/Users/jaspe/Documents/Books and Courses/"
-filename = sys.argv[1]
-if not filename.endswith('.pdf'):
-  filename+='.pdf'
-fo=f'{path}{filename}-cropped.pdf'
+path = os.path.dirname(sys.argv[1])
+filename = os.path.basename(sys.argv[1])
+fo=f'{path}/{filename}-cropped.pdf'
 
 # Margins in inches
 # --All pages
-top, right, bottom, left= 1, 1, 1, 1
+top, right, bottom, left= 1.125, 1.25, 1.25, 2.125
 
 # --Odd pages
-oddLeft   =left
+oddLeft   =2.0
 oddTop    =top
-oddRight  =right
+oddRight  =1.5
 oddBottom =bottom
 # --Even pages
-evenLeft  =left
+evenLeft  =2.375
 evenTop   =top
-evenRight =right
+evenRight =1.125
 evenBottom=bottom
 
 # Convert inches to points
@@ -35,11 +30,10 @@ evenRight *=72
 evenTop   *=72
 evenBottom*=72
 
-# pagesToBreak = [18,  ]
 pagesToExclude = []
 
 if __name__ == "__main__":
-  with open(f'{path}{filename}','rb') as r:
+  with open(f'{path}/{filename}','rb') as r:
     global orig
     orig = PdfFileReader(r)
     pages = orig.getNumPages()
