@@ -1,45 +1,50 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter
-import os,sys
+import os, sys, click
 
-path = os.path.dirname(sys.argv[1])
-filename = os.path.basename(sys.argv[1])
-fo=f'{path}/{filename}-cropped.pdf'
+@click.command()
+@click.option('--examref', is_flag=True)
+@click.option('--packtpub', is_flag=True)
+@click.argument('filename')
+def setmargins(examref, packtpub, filename):
+  oddLeft, oddTop, oddRight, oddBottom, evenLeft, evenTop, evenRight, evenBottom, top, right, bottom, left = 0,0,0,0,0,0,0,0,0,0,0,0
+  if examref:
+    top, right, bottom, left= 1.5,0,1.75,0
+    oddLeft   =1.75
+    oddTop    =top
+    oddRight  =1.5
+    oddBottom =bottom
+    evenLeft  =1.5
+    evenTop   =top
+    evenRight =1.75
+    evenBottom=bottom
+  if packtpub:
+    top, right, bottom, left = 0.625, 0.75, 0.625, 0.75
+    oddLeft   =left
+    oddTop    =top
+    oddRight  =right
+    oddBottom =bottom
+    evenLeft  =left
+    evenTop   =top
+    evenRight =right
+    evenBottom=bottom
+  
+  oddLeft   *=72
+  oddTop    *=72
+  oddRight  *=72
+  oddBottom *=72
+  evenLeft  *=72
+  evenRight *=72
+  evenTop   *=72
+  evenBottom*=72
 
-# Margins in inches
-# --All pages
-top, right, bottom, left= 1.125, 1.25, 1.25, 2.125
-
-# --Odd pages
-oddLeft   =2.0
-oddTop    =top
-oddRight  =1.5
-oddBottom =bottom
-# --Even pages
-evenLeft  =2.375
-evenTop   =top
-evenRight =1.125
-evenBottom=bottom
-
-# Convert inches to points
-oddLeft   *=72
-oddTop    *=72
-oddRight  *=72
-oddBottom *=72
-evenLeft  *=72
-evenRight *=72
-evenTop   *=72
-evenBottom*=72
-
-pagesToExclude = []
-
-if __name__ == "__main__":
+  path = os.path.dirname(filename)
+  filename = os.path.basename(filename)
+  fo=f'{path}/{filename}-cropped.pdf'
   with open(f'{path}/{filename}','rb') as r:
     global orig
     orig = PdfFileReader(r)
     pages = orig.getNumPages()
     pagesToPrint = pages
-
-    
     
     out = PdfFileWriter()
     for i in range(pagesToPrint):
@@ -60,3 +65,8 @@ if __name__ == "__main__":
     with open(fo, "wb") as outf:
       out.write(outf)
       print(f'PDF cropped to {fo}')
+
+pagesToExclude = []
+
+if __name__ == "__main__":
+  setmargins()
