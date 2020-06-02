@@ -4,8 +4,9 @@ import os, sys, click
 @click.command()
 @click.option('--examref', is_flag=True)
 @click.option('--packtpub', is_flag=True)
+@click.option('--manning', is_flag=True)
 @click.argument('filename')
-def setmargins(examref, packtpub, filename):
+def setmargins(examref, packtpub, manning, filename):
   oddLeft, oddTop, oddRight, oddBottom, evenLeft, evenTop, evenRight, evenBottom, top, right, bottom, left = 0,0,0,0,0,0,0,0,0,0,0,0
   if examref:
     top, right, bottom, left= 1.5,0,1.75,0
@@ -27,6 +28,18 @@ def setmargins(examref, packtpub, filename):
     evenTop   =top
     evenRight =right
     evenBottom=bottom
+  if manning:
+    top, right, bottom, left = 0.375, 0.875,0.5,0.375
+    oddLeft   =0.5
+    oddTop    =top
+    oddRight  =0.75
+    oddBottom =bottom
+    evenLeft  =left
+    evenTop   =top
+    evenRight =right
+    evenBottom=bottom
+
+
   
   oddLeft   *=72
   oddTop    *=72
