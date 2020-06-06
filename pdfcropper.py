@@ -5,8 +5,9 @@ import os, sys, click
 @click.option('--examref', is_flag=True)
 @click.option('--packtpub', is_flag=True)
 @click.option('--manning', is_flag=True)
+@click.option('--nostarch', is_flag=True)
 @click.argument('filename')
-def setmargins(examref, packtpub, manning, filename):
+def setmargins(examref, packtpub, manning, nostarch, filename):
   oddLeft, oddTop, oddRight, oddBottom, evenLeft, evenTop, evenRight, evenBottom, top, right, bottom, left = 0,0,0,0,0,0,0,0,0,0,0,0
   if examref:
     top, right, bottom, left= 1.5,0,1.75,0
@@ -38,6 +39,17 @@ def setmargins(examref, packtpub, manning, filename):
     evenTop   =top
     evenRight =right
     evenBottom=bottom
+  if nostarch:
+    top, right, bottom, left= 0.5,0.625,0.25,0.625
+    oddLeft   =left
+    oddTop    =top
+    oddRight  =right
+    oddBottom =bottom
+    evenLeft  =left
+    evenTop   =top
+    evenRight =right
+    evenBottom=bottom
+
 
 
   
