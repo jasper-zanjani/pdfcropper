@@ -10,47 +10,58 @@ def crop(p, top, right, bottom, left):
   p.cropBox.lowerRight= (width - right, bottom)
   return p
 
-
 @click.command()
+@click.option('--top', type=float)
+@click.option('--bottom', type=float)
+@click.option('--left', type=float)
+@click.option('--right', type=float)
 @click.option('--format', type=click.Choice(['examref','packtpub','manning','nostarch'], case_sensitive=False))
 @click.argument('filename')
-def setmargins(format, filename):
-  oddLeft, oddTop, oddRight, oddBottom, evenLeft, evenTop, evenRight, evenBottom, top, right, bottom, left = 0,0,0,0,0,0,0,0,0,0,0,0
-  if format.lower()=='examref':
-    top, right, bottom, left= 1.5,0,1.75,0
-    oddLeft   =1.75
-    oddTop    =top
-    oddRight  =1.5
-    oddBottom =bottom
-    evenLeft  =1.5
-    evenTop   =top
-    evenRight =1.75
-    evenBottom=bottom
-  elif format.lower()=='packtpub':
-    top, right, bottom, left = 0.625, 0.75, 0.625, 0.75
-    oddLeft   =left
-    oddTop    =top
-    oddRight  =right
-    oddBottom =bottom
-    evenLeft  =left
-    evenTop   =top
-    evenRight =right
-    evenBottom=bottom
-  elif format.lower()=='manning':
-    top, right, bottom, left = 0.375, 0.875,0.5,0.375
-    oddLeft   =0.5
-    oddTop    =top
-    oddRight  =0.75
-    oddBottom =bottom
-    evenLeft  =left
-    evenTop   =top
-    evenRight =right
-    evenBottom=bottom
-  elif format.lower()=='nostarch':
-    top, right, bottom, left= 0.5,0.625,0.25,0.625
-    oddLeft,oddTop,oddRight,oddBotom,evenLeft,evenTop,evenRight,evenBottom = left,top,right,bottom,left,top,right,bottom
+def setmargins(format, filename, top, right, bottom, left):
+  oddLeft, oddTop, oddRight, oddBottom, evenLeft, evenTop, evenRight, evenBottom = 0,0,0,0,0,0,0,0
+  if format == None:
+    oddLeft, evenLeft = left, left
+    oddRight, evenRight = right, right
+    oddTop, evenTop = top, top
+    oddBottom, evenBottom = bottom, bottom
   else:
-    oddLeft, oddTop, oddRight, oddBottom, evenLeft, evenTop, evenRight, evenBottom = top, right, bottom, left, top, right, bottom, left
+    if format.lower()=='examref':
+      top, right, bottom, left= 1.5,0,1.75,0
+      oddLeft   =1.75
+      oddTop    =top
+      oddRight  =1.5
+      oddBottom =bottom
+      evenLeft  =1.5
+      evenTop   =top
+      evenRight =1.75
+      evenBottom=bottom
+    elif format.lower()=='packtpub':
+      top, right, bottom, left = 0.625, 0.75, 0.625, 0.75
+      oddLeft   =left
+      oddTop    =top
+      oddRight  =right
+      oddBottom =bottom
+      evenLeft  =left
+      evenTop   =top
+      evenRight =right
+      evenBottom=bottom
+    elif format.lower()=='manning':
+      top, right, bottom, left = 0.375, 0.875,0.5,0.375
+      oddLeft   =0.5
+      oddTop    =top
+      oddRight  =0.75
+      oddBottom =bottom
+      evenLeft  =left
+      evenTop   =top
+      evenRight =right
+      evenBottom=bottom
+    elif format.lower()=='nostarch':
+      top, right, bottom, left= 0.5,0.625,0.25,0.625
+      oddLeft = left
+      evenLeft = left
+      oddTop,oddRight,oddBotom,evenLeft,evenTop,evenRight,evenBottom = left,top,right,bottom,left,top,right,bottom
+    else:
+      pass
   oddLeft   *=72
   oddTop    *=72
   oddRight  *=72
