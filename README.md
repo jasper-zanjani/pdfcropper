@@ -15,12 +15,7 @@ Alternatively, you can define custom margins in inches by supplying arguments to
 - `--bottom`
 - `--left`
 
-#### Example 1
 ```sh
-python pdfcropper.py ~/doc.pdf --format packtpub
+python pdfcropper.py ~/doc.pdf --format packtpub --top 1.25
 ```
 
-#### Example 2
-```sh
-python pdfcropper.py ~/doc.pdf --top 1 --right 0.5 --bottom 1 --left 0.5
-```
