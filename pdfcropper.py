@@ -138,6 +138,8 @@ def getMargins(format, top = None, right = None,  bottom = None, left = None):
     output =  Margins( top = 0.375, right = 0.875, bottom = 0.5, left = 0.375, oddLeft = 0.5, oddRight = 0.75 )
   elif format.lower().startswith('n'):  # NoStarch
     output =  Margins( top = 0.5, right = 0.625, bottom = 0.25, left = 0.625 )
+  elif format.lower().startswith('o'):  # O'Reilly
+    output =  Margins( top = 0.625, right = 0.75, bottom = 0.5, left = 0.75 )
 
   if top != None: 
     print("Custom top dimension")
@@ -185,7 +187,7 @@ import click
 @click.option('--bottom', type=float)
 @click.option('--left', type=float)
 @click.option('--right', type=float)
-@click.option('--format', type=click.Choice(['examref','packtpub','manning','nostarch'], case_sensitive=False))
+@click.option('--format', type=click.Choice(['examref','packtpub','manning','nostarch','oreilly'], case_sensitive=False))
 @click.argument('filename')
 def main(format, top, bottom, left, right, filename):
   margins = getMargins(format, top, right, bottom, left)
