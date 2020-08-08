@@ -7,6 +7,7 @@ The values passed to `--format` determine margin dimensions typical to that publ
 - `examref` ("Exam Ref" series published by Microsoft)
 - [`manning`](https://manning.com)
 - [`nostarch`](https://nostarch.com)
+- [`oreilly`](https://oreilly.com)
 - [`packtpub`](https://packtpub.com)
 
 Alternatively, you can define custom margins in inches by supplying arguments to the following options:
