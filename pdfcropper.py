@@ -1,4 +1,6 @@
-
+from PyPDF2 import PdfFileReader, PdfFileWriter
+import os
+import sys
 import click
 pagesToExclude = []
 
